@@ -1,4 +1,4 @@
-export default function Modal({ image, onClose}){
+export default function Modal({ image , onClose}){
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50'>

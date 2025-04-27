@@ -4,13 +4,12 @@ export default function ImageGallery({ images, setSelectedImage }) {
       {images.map((image) => (
         <div 
           key={image.id} 
-          className="overflow-hidden rounded-lg shadow-lg border border-black "
           onClick={ () => setSelectedImage(image) }
         >
           <img
             src={image.urls.small}
             alt={image.alt_description}
-            className="h-60 w-72 object-cover hover:scale-105 transition-transform duration-300"
+            className="h-full w-auto overflow-hidden border border-gray-600 rounded-lg  object-cover hover:scale-103 transition-transform duration-300 ease-in-out"
           />
         </div>
       ))}
