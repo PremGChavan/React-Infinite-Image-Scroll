@@ -1,11 +1,14 @@
-import { useEffect, useReducer, useCallback, useRef } from "react";
+import { useEffect, useReducer, useCallback, useRef, useState } from "react";
 import unsplash from "./api/unsplash";
 import { initialState, imageReducer } from "./reducer/ImageReducer";
 import ImageGallery from "./components/ImageGallery";
 import SearchBar from "./components/SearchBar";
+import Modal from "./components/Modal";
 
 export default function App() {
   const [state, dispatch] = useReducer(imageReducer, initialState);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const isFetching = useRef(false); 
 
   const fetchImages = useCallback(async () => {
@@ -54,15 +57,21 @@ export default function App() {
 
   const handleSearch = (searchQuery) => {
     dispatch({ type: "SET_QUERY", payload: searchQuery });
-    
+
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
+
       <SearchBar onSearch={handleSearch} />
       {state.error && <div className="text-center text-red-500">{state.error}</div>}
-      <ImageGallery images={state.images} />
+
+      <ImageGallery images={state.images} setSelectedImage={setSelectedImage}  />
       {state.loading && <div className="text-center p-4">Loading...</div>}
+
+      {/* on click of image */}
+      {selectedImage && <Modal image={selectedImage} onClose={() => setSelectedImage(null)} />}
+
     </div>
   );
 }
